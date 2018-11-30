@@ -5,6 +5,9 @@ var ballY = 50;
 var ballSpeedX = 10;
 var ballSpeedY = 4;
 
+var player1Score = 0;
+var player2Score = 0;
+
 var paddle1Y = 250;
 var paddle2Y = 250;
 
@@ -44,10 +47,31 @@ window.onload = function() {
 
 }
 
+function computerMovement() {
+
+    var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT / 2);
+
+    if (paddle2Y < ballY - 35) {
+        // paddle2Y = paddle2Y + 6;
+        paddle2Y += 6;
+
+    } else if (paddle2Y > ballY + 35) {
+        // paddle2Y = paddle2Y - 6;
+        paddle2Y -= 6;
+
+
+    }
+}
+
 function moveEverything() {
 
-    ballX = ballX + ballSpeedX;
-    ballY = ballY + ballSpeedY;
+    computerMovement();
+
+    // ballX = ballX + ballSpeedX;
+    // ballY = ballY + ballSpeedY;
+
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
 
     console.clear();
     console.log("X:", ballX, "Y:", ballY);
@@ -58,6 +82,7 @@ function moveEverything() {
             ballSpeedX = -ballSpeedX;
         } else {
             ballRest();
+            player2Score++;
         }
     }
 
@@ -68,6 +93,8 @@ function moveEverything() {
             ballSpeedX = -ballSpeedX;
         } else {
             ballRest();
+            player1Score++;
+
         }
     }
 
@@ -103,6 +130,12 @@ function drawEverything() {
 
     // next line draws the ball
     colorCircle(ballX, ballY, 10, 'red');
+
+    canvasContext.font = "20px Verdana,  sans-serif ";
+    canvasContext.fillStyle = 'blue';
+    canvasContext.fillText(player1Score, 100, 100);
+    canvasContext.fillText(player2Score, canvas.width - 100, 100);
+
 
 }
 
